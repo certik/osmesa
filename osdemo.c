@@ -24,10 +24,6 @@
 #include "GL/osmesa.h"
 #include "GL/glu.h"
 
-static int Width = 400;
-static int Height = 400;
-
-
 static void
 Sphere(float radius, int slices, int stacks)
 {
@@ -195,9 +191,15 @@ write_ppm(const char *filename, const GLubyte *buffer, int width, int height)
 
 OSMesaContext ctx;
 void *buffer;
+static int Width = 400;
+static int Height = 400;
 
-int init_context(int width, int height)
+
+
+int init_context(int w, int h)
 {
+    Width = w;
+    Height = h;
 
    ctx = OSMesaCreateContextExt( OSMESA_RGBA, 16, 0, 0, NULL );
    if (!ctx) {
