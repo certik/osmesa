@@ -1,4 +1,5 @@
 import pyglet
+import osmesa
 
 window = pyglet.window.Window()
 label = pyglet.text.Label('Hello, world', 
@@ -10,6 +11,8 @@ label = pyglet.text.Label('Hello, world',
 @window.event
 def on_draw():
     window.clear()
+    # this segfaults:
+    #osmesa.render()
     label.draw()
 
 pyglet.app.run()
