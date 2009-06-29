@@ -1,3 +1,6 @@
+from pyglet.gl import (glClear, glLoadIdentity, glBegin, glVertex2f, glEnd,
+        GL_COLOR_BUFFER_BIT, GL_TRIANGLES)
+
 import pyglet
 import osmesa
 
@@ -13,6 +16,16 @@ def on_draw():
     window.clear()
     # this segfaults:
     #osmesa.render()
+    #pyglet.graphics.draw(2, pyglet.gl.GL_POINTS,
+    #            ('v2i', (10, 15, 30, 35))
+    #            )
+    glClear(GL_COLOR_BUFFER_BIT)
+    glLoadIdentity()
+    glBegin(GL_TRIANGLES)
+    glVertex2f(0, 0)
+    glVertex2f(window.width, 0)
+    glVertex2f(window.width, window.height)
+    glEnd()
     label.draw()
 
 pyglet.app.run()
