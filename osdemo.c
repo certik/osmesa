@@ -193,6 +193,50 @@ write_ppm(const char *filename, const GLubyte *buffer, int width, int height)
    }
 }
 
+OSMesaContext ctx;
+void *buffer;
+
+int init_context(int width, int height)
+{
+
+   ctx = OSMesaCreateContextExt( OSMESA_RGBA, 16, 0, 0, NULL );
+   if (!ctx) {
+      printf("OSMesaCreateContext failed!\n");
+      return -1;
+   }
+
+   buffer = malloc( Width * Height * 4 * sizeof(GLubyte) );
+   if (!buffer) {
+      printf("Alloc image buffer failed!\n");
+      return -1;
+   }
+
+   if (!OSMesaMakeCurrent( ctx, buffer, GL_UNSIGNED_BYTE, Width, Height )) {
+      printf("OSMesaMakeCurrent failed!\n");
+      return -1;
+   }
+
+
+   {
+      int z, s, a;
+      glGetIntegerv(GL_DEPTH_BITS, &z);
+      glGetIntegerv(GL_STENCIL_BITS, &s);
+      glGetIntegerv(GL_ACCUM_RED_BITS, &a);
+      printf("Depth=%d Stencil=%d Accum=%d\n", z, s, a);
+   }
+   return 0;
+}
+
+void free_context()
+{
+   write_ppm("a.ppm", buffer, Width, Height);
+
+   printf("all done\n");
+
+   free( buffer );
+
+   OSMesaDestroyContext( ctx );
+}
 
 /*
 int
