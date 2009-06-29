@@ -1,3 +1,6 @@
 all:
-	gcc -c -o osdemo.o osdemo.c
-	gcc -o osdemo osdemo.o -lOSMesa -lGLU
+	cython osmesa.pyx
+	gcc -fPIC -I/usr/include/python2.6 -c -o osmesa.o osmesa.c
+	gcc -fPIC -c -o osdemo.o osdemo.c
+	gcc -shared -o osmesa.so osmesa.o osdemo.o -lOSMesa -lGLU
+
