@@ -90,8 +90,7 @@ Torus(float innerRadius, float outerRadius, int sides, int rings)
 }
 
 
-static void
-render_image(void)
+void render_image(void)
 {
    GLfloat light_ambient[] = { 0.0, 0.0, 0.0, 1.0 };
    GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
