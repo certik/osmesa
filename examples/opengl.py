@@ -56,7 +56,7 @@ from pyglet.gl import (GL_DEPTH_TEST, GL_CULL_FACE, GL_LIGHTING, GL_LIGHT0,
 
         GLfloat, GLuint,
 
-        glLightfv, glMaterialfv, glGenLists, glNewList, glVertexPointer,
+        glGenLists, glNewList, glVertexPointer,
         glNormalPointer, glDrawElements, gluPerspective,
         )
 import pyglet
@@ -130,8 +130,8 @@ def setup():
     gl.glLightfv(GL_LIGHT1, GL_DIFFUSE, (.5, .5, .5, 1))
     gl.glLightfv(GL_LIGHT1, GL_SPECULAR, (1, 1, 1, 1))
 
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, vec(0.5, 0, 0.3, 1))
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, vec(1, 1, 1, 1))
+    gl.glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, (0.5, 0, 0.3, 1))
+    gl.glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, (1, 1, 1, 1))
     gl.glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 50)
 
 class Torus(object):

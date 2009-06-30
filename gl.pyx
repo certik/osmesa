@@ -1187,3 +1187,7 @@ def glLightfv(light, pname, params):
     cdef ndarray a = array(params, dtype="float32")
     c_glLightfv(light, pname, <GLfloat *> (&a.data[0]))
 
+def glMaterialfv(face, pname, params):
+    cdef ndarray a = array(params, dtype="float32")
+    c_glMaterialfv(face, pname, <GLfloat *> (&a.data[0]))
+
