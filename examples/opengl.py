@@ -52,7 +52,7 @@ from pyglet.gl import (GL_DEPTH_TEST, GL_CULL_FACE, GL_LIGHTING, GL_LIGHT0,
         GL_AMBIENT_AND_DIFFUSE, GL_SHININESS, GL_COMPILE,
         GL_CLIENT_VERTEX_ARRAY_BIT, GL_VERTEX_ARRAY, GL_NORMAL_ARRAY, GL_FLOAT,
         GL_TRIANGLES, GL_UNSIGNED_INT, GL_PROJECTION, GL_MODELVIEW,
-        GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT,
+        GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_LINE,
 
         GLfloat, GLuint,
 
@@ -108,19 +108,12 @@ def setup():
     gl.glEnable(GL_DEPTH_TEST)
     gl.glEnable(GL_CULL_FACE)
 
-    # Uncomment this line for a wireframe view
-    #glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
-
     # Simple light setup.  On Windows GL_LIGHT0 is enabled by default,
     # but this is not the case on Linux or Mac, so remember to always 
     # include it.
     gl.glEnable(GL_LIGHTING)
     gl.glEnable(GL_LIGHT0)
     gl.glEnable(GL_LIGHT1)
-
-    # Define a simple function to create ctypes arrays of floats:
-    def vec(*args):
-        return (GLfloat * len(args))(*args)
 
     gl.glLightfv(GL_LIGHT0, GL_POSITION, (.5, .5, 1, 0))
     gl.glLightfv(GL_LIGHT0, GL_SPECULAR, (.5, .5, 1, 1))
