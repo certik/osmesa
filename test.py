@@ -1,13 +1,13 @@
 import osmesa
 
-import pyglet
-pyglet.options['debug_lib'] = True
+#import pyglet
+#pyglet.options['debug_lib'] = True
 #pyglet.options['debug_trace'] = True
-from pyglet.gl import (glMatrixMode, glFinish, GL_PROJECTION, glLoadIdentity,
-        glOrtho, glPushMatrix, GL_MODELVIEW, glRotatef, glTranslatef,
-        glMaterialfv, GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, glPopMatrix,
-        GLfloat, glFlush, gluNewQuadric, gluQuadricNormals, gluSphere,
-        gluDeleteQuadric, GLU_SMOOTH)
+#from pyglet.gl import (glMatrixMode, glFinish, GL_PROJECTION, glLoadIdentity,
+#        glOrtho, glPushMatrix, GL_MODELVIEW, glRotatef, glTranslatef,
+#        glMaterialfv, GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, glPopMatrix,
+#        GLfloat, glFlush, gluNewQuadric, gluQuadricNormals, gluSphere,
+#        gluDeleteQuadric, GLU_SMOOTH)
 
 
 def vec(*args):
@@ -26,14 +26,14 @@ h = 400
 
 osmesa.init_ctx(w, h)
 osmesa.render()
-blue_mat = vec(1, 1, 0.5, 1)
+#blue_mat = vec(1, 1, 0.5, 1)
 
-glPushMatrix()
-glTranslatef(0.75, 0.0, 0)
-glTranslatef(0.75, 0.0, 1.0)
-glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, blue_mat)
-sphere(1.0, 20, 4)
-glPopMatrix()
+#glPushMatrix()
+#glTranslatef(0.75, 0.0, 0)
+#glTranslatef(0.75, 0.0, 1.0)
+#glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, blue_mat)
+#sphere(1.0, 20, 4)
+#glPopMatrix()
 #glFinish()
 
 osmesa.sphere(180)
