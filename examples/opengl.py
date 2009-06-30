@@ -121,7 +121,7 @@ def setup():
 
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, vec(0.5, 0, 0.3, 1))
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, vec(1, 1, 1, 1))
-    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 50)
+    gl.glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 50)
 
 class Torus(object):
     def __init__(self, radius, inner_radius, slices, inner_slices):
@@ -171,15 +171,15 @@ class Torus(object):
         self.list = glGenLists(1)
         glNewList(self.list, GL_COMPILE)
 
-        glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT)
-        glEnableClientState(GL_VERTEX_ARRAY)
-        glEnableClientState(GL_NORMAL_ARRAY)
+        gl.glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT)
+        gl.glEnableClientState(GL_VERTEX_ARRAY)
+        gl.glEnableClientState(GL_NORMAL_ARRAY)
         glVertexPointer(3, GL_FLOAT, 0, vertices)
         glNormalPointer(GL_FLOAT, 0, normals)
         glDrawElements(GL_TRIANGLES, len(indices), GL_UNSIGNED_INT, indices)
-        glPopClientAttrib()
+        gl.glPopClientAttrib()
 
-        glEndList()
+        gl.glEndList()
 
     def draw(self):
         glCallList(self.list)
