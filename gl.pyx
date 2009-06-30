@@ -1,3 +1,6 @@
+from numpy import array
+from numpy cimport ndarray
+
 cdef extern from "/usr/include/GL/gl.h":
     ctypedef unsigned int GLenum
     ctypedef unsigned char GLboolean
@@ -245,7 +248,7 @@ cdef extern from "/usr/include/GL/gl.h":
     void c_glShadeModel "glShadeModel"(GLenum mode)
     void c_glLightf "glLightf"(GLenum light, GLenum pname, GLfloat param)
     void c_glLighti "glLighti"(GLenum light, GLenum pname, GLint param)
-    # void c_glLightfv "glLightfv"(GLenum light, GLenum pname, GLfloat* params)
+    void c_glLightfv "glLightfv"(GLenum light, GLenum pname, GLfloat* params)
     # void c_glLightiv "glLightiv"(GLenum light, GLenum pname, GLint* params)
     # void c_glGetLightfv "glGetLightfv"(GLenum light, GLenum pname, GLfloat* params)
     # void c_glGetLightiv "glGetLightiv"(GLenum light, GLenum pname, GLint* params)
@@ -884,6 +887,10 @@ def glLightf(light, pname, param):
 
 def glLighti(light, pname, param):
     c_glLighti(light, pname, param)
+
+def glLightfv(light, pname, params):
+    cdef ndarray a = array(params, dtype="float")
+    c_glLightfv(light, pname, <GLfloat *> (&a.data[0]))
 
 def glLightModelf(pname, param):
     c_glLightModelf(pname, param)

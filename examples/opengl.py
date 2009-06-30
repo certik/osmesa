@@ -124,7 +124,7 @@ def setup():
         return (GLfloat * len(args))(*args)
 
     glLightfv(GL_LIGHT0, GL_POSITION, vec(.5, .5, 1, 0))
-    glLightfv(GL_LIGHT0, GL_SPECULAR, vec(.5, .5, 1, 1))
+    gl.glLightfv(GL_LIGHT0, GL_SPECULAR, (.5, .5, 1, 1))
     glLightfv(GL_LIGHT0, GL_DIFFUSE, vec(1, 1, 1, 1))
     glLightfv(GL_LIGHT1, GL_POSITION, vec(1, 0, .5, 0))
     glLightfv(GL_LIGHT1, GL_DIFFUSE, vec(.5, .5, .5, 1))
