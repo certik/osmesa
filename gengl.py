@@ -8,6 +8,7 @@ testdata = open(header).read()
 
 functions_skip = [
         "glCreateDebugObjectMESA",
+        "glBlendEquationSeparateATI",
         ]
 
 ident = Word(alphas, alphanums + "_")
