@@ -15,19 +15,19 @@ def sphere(radius, slices, stacks):
 w = 400
 h = 400
 
-label = pyglet.text.Label('Hello, world',
-                          font_name='Times New Roman',
-                          font_size=36,
-                          x=w//2, y=h//2,
-                          anchor_x='center', anchor_y='center')
+#label = pyglet.text.Label('Hello, world',
+#                          font_name='Times New Roman',
+#                          font_size=36,
+#                          x=w//2, y=h//2,
+#                          anchor_x='center', anchor_y='center')
 
-osmesa.init_ctx(w, h)
 #import pyglet.gl
 from pyglet.gl import (glMatrixMode, glFinish, GL_PROJECTION, glLoadIdentity,
         glOrtho, glPushMatrix, GL_MODELVIEW, glRotatef, glTranslatef,
         glMaterialfv, GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, glPopMatrix,
         GLfloat, glFlush, gluNewQuadric, gluQuadricNormals, gluSphere,
         gluDeleteQuadric, GLU_SMOOTH)
+osmesa.init_ctx(w, h)
 osmesa.render()
 blue_mat = vec(1, 1, 0.5, 1)
 
