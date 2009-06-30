@@ -13,18 +13,15 @@ arglist = delimitedList( Group(vartype.setResultsName("type") + \
         ident.setResultsName("name")) )
 functionCall = ident.setResultsName("name") + \
         "(" + (arglist.setResultsName("args") | "void") + ")" + ";"
-typedef = "typedef" + Optional("unsigned") + ident + ident + ";"
+typedef = "typedef" + Optional("unsigned") + Optional("signed") + \
+        ident + ident + ";"
 
 print """cdef extern from "%s":""" % (header)
 for fn, s, e in typedef.scanString(testdata):
     print "    ctypedef", " ".join(fn[1:-1])
 print
 py_functions = []
-i = 0
 for fn, s, e in functionCall.scanString(testdata):
-    i += 1
-    if i > 3:
-        break
     func =   '    void c_%s "%s"(' % (fn.name, fn.name)
     pyfunc = "def %s(" % fn.name
     pyfunc_args = ""
