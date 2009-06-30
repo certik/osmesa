@@ -18,7 +18,16 @@ typedef = "typedef" + Optional("unsigned") + ident + ident + ";"
 print """cdef extern from "%s":""" % (header)
 for fn, s, e in typedef.scanString(testdata):
     print "    ctypedef", " ".join(fn[1:-1])
-#for fn, s, e in functionCall.scanString(testdata):
-#    print fn.name, fn.return_type
-#    for a in fn.args:
-#        print " -", a.type, a.name
+print
+i = 0
+for fn, s, e in functionCall.scanString(testdata):
+    i += 1
+    if i > 3:
+        break
+    func = "    void %s c_%s(" % (fn.name, fn.name)
+    for a in fn.args:
+        func += "%s %s, " % (a.type[-1], a.name)
+    if len(fn.args) > 0:
+        func = func[:-2]
+    func += ")"
+    print func
