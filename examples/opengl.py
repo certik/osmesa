@@ -47,14 +47,26 @@ This example demonstrates:
 '''
 from math import pi, sin, cos
 
-from pyglet.gl import *
+from pyglet.gl import (GL_DEPTH_TEST, GL_CULL_FACE, GL_LIGHTING, GL_LIGHT0,
+        GL_LIGHT1, GL_POSITION, GL_SPECULAR, GL_DIFFUSE, GL_FRONT_AND_BACK,
+        GL_AMBIENT_AND_DIFFUSE, GL_SHININESS, GL_COMPILE,
+        GL_CLIENT_VERTEX_ARRAY_BIT, GL_VERTEX_ARRAY, GL_NORMAL_ARRAY, GL_FLOAT,
+        GL_TRIANGLES, GL_UNSIGNED_INT, GL_PROJECTION, GL_MODELVIEW,
+        GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT,
+
+        GLfloat, GLuint,
+
+        glLightfv, glMaterialfv, glGenLists, glNewList, glVertexPointer,
+        glNormalPointer, glDrawElements, glViewport, glMatrixMode,
+        glLoadIdentity, gluPerspective,
+        )
 import pyglet
 
 import gl
 
 try:
     # Try and create a window with multisampling (antialiasing)
-    config = Config(sample_buffers=1, samples=4, 
+    config = pyglet.gl.Config(sample_buffers=1, samples=4, 
                     depth_size=16, double_buffer=True,)
     window = pyglet.window.Window(resizable=True, config=config)
 except pyglet.window.NoSuchConfigException:
@@ -182,7 +194,7 @@ class Torus(object):
         gl.glEndList()
 
     def draw(self):
-        glCallList(self.list)
+        gl.glCallList(self.list)
 
 setup()
 torus = Torus(1, 0.3, 50, 30)
