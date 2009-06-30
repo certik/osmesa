@@ -123,12 +123,12 @@ def setup():
     def vec(*args):
         return (GLfloat * len(args))(*args)
 
-    glLightfv(GL_LIGHT0, GL_POSITION, vec(.5, .5, 1, 0))
+    gl.glLightfv(GL_LIGHT0, GL_POSITION, (.5, .5, 1, 0))
     gl.glLightfv(GL_LIGHT0, GL_SPECULAR, (.5, .5, 1, 1))
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, vec(1, 1, 1, 1))
-    glLightfv(GL_LIGHT1, GL_POSITION, vec(1, 0, .5, 0))
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, vec(.5, .5, .5, 1))
-    glLightfv(GL_LIGHT1, GL_SPECULAR, vec(1, 1, 1, 1))
+    gl.glLightfv(GL_LIGHT0, GL_DIFFUSE, (1, 1, 1, 1))
+    gl.glLightfv(GL_LIGHT1, GL_POSITION, (1, 0, .5, 0))
+    gl.glLightfv(GL_LIGHT1, GL_DIFFUSE, (.5, .5, .5, 1))
+    gl.glLightfv(GL_LIGHT1, GL_SPECULAR, (1, 1, 1, 1))
 
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, vec(0.5, 0, 0.3, 1))
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, vec(1, 1, 1, 1))
