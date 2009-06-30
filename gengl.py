@@ -15,12 +15,17 @@ functions_skip = [
         "glBlendEquationSeparateATI",
         ]
 
+functions_manual = [
+        "glGenLists",
+        ]
+
 ident = Word(alphas, alphanums + "_")
 vartype = (Optional("const") + Combine(ident + Optional(Word("*")),
         adjacent = False))
 arglist = delimitedList( Group(vartype.setResultsName("type") + \
         ident.setResultsName("name")) )
-functionCall = ident.setResultsName("name") + \
+functionCall = "GLAPI" + ident.setResultsName("return_type") + "GLAPIENTRY" + \
+        ident.setResultsName("name") + \
         "(" + (arglist.setResultsName("args") | "void") + ")" + ";"
 typedef = "typedef" + Optional("unsigned") + Optional("signed") + \
         ident + ident + ";"
@@ -42,7 +47,9 @@ for fn, s, e in functionCall.scanString(testdata):
     if fn.name in functions_skip:
         skip = True
         interface = False
-    func =   'void c_%s "%s"(' % (fn.name, fn.name)
+    if fn.name in functions_manual:
+        skip = True
+    func =   '%s c_%s "%s"(' % (fn.return_type, fn.name, fn.name)
     pyfunc = "def %s(" % fn.name
     pyfunc_args = ""
     for a in fn.args:
@@ -99,6 +106,8 @@ def glDrawElements(mode, count, type, indices):
     cdef ndarray a = array(indices, dtype="uint32")
     c_glDrawElements(mode, count, type, <GLvoid *> (&a.data[0]))
 
+def glGenLists(range):
+    return c_glGenLists(range)
 """
 print extra_code
 

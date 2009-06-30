@@ -44,7 +44,7 @@ cdef extern from "/usr/include/GL/gl.h":
     void c_glReadBuffer "glReadBuffer"(GLenum mode)
     void c_glEnable "glEnable"(GLenum cap)
     void c_glDisable "glDisable"(GLenum cap)
-    void c_glIsEnabled "glIsEnabled"(GLenum cap)
+    GLboolean c_glIsEnabled "glIsEnabled"(GLenum cap)
     void c_glEnableClientState "glEnableClientState"(GLenum cap)
     void c_glDisableClientState "glDisableClientState"(GLenum cap)
     void c_glGetBooleanv "glGetBooleanv"(GLenum pname, GLboolean* params)
@@ -55,9 +55,8 @@ cdef extern from "/usr/include/GL/gl.h":
     void c_glPopAttrib "glPopAttrib"()
     void c_glPushClientAttrib "glPushClientAttrib"(GLbitfield mask)
     void c_glPopClientAttrib "glPopClientAttrib"()
-    void c_glRenderMode "glRenderMode"(GLenum mode)
-    void c_glGetError "glGetError"()
-    void c_glGetString "glGetString"(GLenum name)
+    GLint c_glRenderMode "glRenderMode"(GLenum mode)
+    GLenum c_glGetError "glGetError"()
     void c_glFinish "glFinish"()
     void c_glFlush "glFlush"()
     void c_glHint "glHint"(GLenum target, GLenum mode)
@@ -84,9 +83,9 @@ cdef extern from "/usr/include/GL/gl.h":
     void c_glScalef "glScalef"(GLfloat x, GLfloat y, GLfloat z)
     void c_glTranslated "glTranslated"(GLdouble x, GLdouble y, GLdouble z)
     void c_glTranslatef "glTranslatef"(GLfloat x, GLfloat y, GLfloat z)
-    void c_glIsList "glIsList"(GLuint list)
+    GLboolean c_glIsList "glIsList"(GLuint list)
     void c_glDeleteLists "glDeleteLists"(GLuint list, GLsizei range)
-    void c_glGenLists "glGenLists"(GLsizei range)
+    GLuint c_glGenLists "glGenLists"(GLsizei range)
     void c_glNewList "glNewList"(GLuint list, GLenum mode)
     void c_glEndList "glEndList"()
     void c_glCallList "glCallList"(GLuint list)
@@ -312,8 +311,8 @@ cdef extern from "/usr/include/GL/gl.h":
     void c_glDeleteTextures "glDeleteTextures"(GLsizei n, GLuint* textures)
     void c_glBindTexture "glBindTexture"(GLenum target, GLuint texture)
     void c_glPrioritizeTextures "glPrioritizeTextures"(GLsizei n, GLuint* textures, GLclampf* priorities)
-    void c_glAreTexturesResident "glAreTexturesResident"(GLsizei n, GLuint* textures, GLboolean* residences)
-    void c_glIsTexture "glIsTexture"(GLuint texture)
+    GLboolean c_glAreTexturesResident "glAreTexturesResident"(GLsizei n, GLuint* textures, GLboolean* residences)
+    GLboolean c_glIsTexture "glIsTexture"(GLuint texture)
     void c_glTexSubImage1D "glTexSubImage1D"(GLenum target, GLint level, GLint xoffset, GLsizei width, GLenum format, GLenum type, GLvoid* pixels)
     void c_glTexSubImage2D "glTexSubImage2D"(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, GLvoid* pixels)
     void c_glCopyTexImage1D "glCopyTexImage1D"(GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLint border)
@@ -468,13 +467,12 @@ cdef extern from "/usr/include/GL/gl.h":
     void c_glMultiTexCoord4ivARB "glMultiTexCoord4ivARB"(GLenum target, GLint* v)
     void c_glMultiTexCoord4sARB "glMultiTexCoord4sARB"(GLenum target, GLshort s, GLshort t, GLshort r, GLshort q)
     void c_glMultiTexCoord4svARB "glMultiTexCoord4svARB"(GLenum target, GLshort* v)
-    # void c_glCreateDebugObjectMESA "glCreateDebugObjectMESA"()
+    # GLhandleARB c_glCreateDebugObjectMESA "glCreateDebugObjectMESA"()
     # void c_glClearDebugLogMESA "glClearDebugLogMESA"(GLhandleARB obj, GLenum logType, GLenum shaderType)
     # void c_glGetDebugLogMESA "glGetDebugLogMESA"(GLhandleARB obj, GLenum logType, GLenum shaderType, GLsizei maxLength, GLsizei* length, GLcharARB* debugLog)
-    # void c_glGetDebugLogLengthMESA "glGetDebugLogLengthMESA"(GLhandleARB obj, GLenum logType, GLenum shaderType)
+    # GLsizei c_glGetDebugLogLengthMESA "glGetDebugLogLengthMESA"(GLhandleARB obj, GLenum logType, GLenum shaderType)
     # void c_glProgramCallbackMESA "glProgramCallbackMESA"(GLenum target, GLprogramcallbackMESA callback, GLvoid* data)
     void c_glGetProgramRegisterfvMESA "glGetProgramRegisterfvMESA"(GLenum target, GLsizei len, GLubyte* name, GLfloat* v)
-    void c_glFramebufferTextureLayerEXT "glFramebufferTextureLayerEXT"(GLenum target, GLenum attachment, GLuint texture, GLint level, GLint layer)
     # void c_glBlendEquationSeparateATI "glBlendEquationSeparateATI"(GLenum modeRGB, GLenum modeA)
 
 def glClearIndex(c):
@@ -567,9 +565,6 @@ def glRenderMode(mode):
 def glGetError():
     c_glGetError()
 
-def glGetString(name):
-    c_glGetString(name)
-
 def glFinish():
     c_glFinish()
 
@@ -641,9 +636,6 @@ def glIsList(list):
 
 def glDeleteLists(list, range):
     c_glDeleteLists(list, range)
-
-def glGenLists(range):
-    c_glGenLists(range)
 
 def glNewList(list, mode):
     c_glNewList(list, mode)
@@ -1179,9 +1171,6 @@ def glMultiTexCoord4iARB(target, s, t, r, q):
 def glMultiTexCoord4sARB(target, s, t, r, q):
     c_glMultiTexCoord4sARB(target, s, t, r, q)
 
-def glFramebufferTextureLayerEXT(target, attachment, texture, level, layer):
-    c_glFramebufferTextureLayerEXT(target, attachment, texture, level, layer)
-
 
 def glLightfv(light, pname, params):
     cdef ndarray a = array(params, dtype="float32")
@@ -1206,4 +1195,6 @@ def glDrawElements(mode, count, type, indices):
     cdef ndarray a = array(indices, dtype="uint32")
     c_glDrawElements(mode, count, type, <GLvoid *> (&a.data[0]))
 
+def glGenLists(range):
+    return c_glGenLists(range)
 
