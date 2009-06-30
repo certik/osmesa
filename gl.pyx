@@ -1191,3 +1191,8 @@ def glMaterialfv(face, pname, params):
     cdef ndarray a = array(params, dtype="float32")
     c_glMaterialfv(face, pname, <GLfloat *> (&a.data[0]))
 
+def glNormalPointer(type, stride, ptr):
+    # this only works if type == GL_FLOAT
+    cdef ndarray a = array(ptr, dtype="float32")
+    c_glNormalPointer(type, stride, <GLvoid *> (&a.data[0]))
+
