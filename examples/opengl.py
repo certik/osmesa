@@ -45,13 +45,12 @@ This example demonstrates:
  * Fixed-pipeline lighting
 
 '''
-
-import gl
-
 from math import pi, sin, cos
 
 from pyglet.gl import *
 import pyglet
+
+import gl
 
 try:
     # Try and create a window with multisampling (antialiasing)
