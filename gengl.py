@@ -24,7 +24,7 @@ for fn, s, e in typedef.scanString(testdata):
 print
 py_functions = []
 for fn, s, e in functionCall.scanString(testdata):
-    func =   '    void c_%s "%s"(' % (fn.name, fn.name)
+    func =   'void c_%s "%s"(' % (fn.name, fn.name)
     pyfunc = "def %s(" % fn.name
     pyfunc_args = ""
     skip = False
@@ -33,26 +33,26 @@ for fn, s, e in functionCall.scanString(testdata):
         if a_type[-1] == "*":
             # skip pointers for now
             skip = True
-            break
         if a_type[-1] == "*":
             a_type = a_type[:-1]
         if a_type[-1] == "*":
             a_type = a_type[:-1]
         if not a_type in known_types:
             skip = True
-            break
         func += "%s %s, " % (a.type[-1], a.name)
         pyfunc_args += "%s, " % (a.name)
-    if skip:
-        continue
     if len(fn.args) > 0:
         func = func[:-2]
         pyfunc_args = pyfunc_args[:-2]
     func += ")"
     pyfunc += pyfunc_args+"):\n"
     pyfunc += "    c_%s(%s)\n" % (fn.name, pyfunc_args)
+    if skip:
+        func = "# " + func
+    func = "    " + func
     print func
-    py_functions.append(pyfunc)
+    if not skip:
+        py_functions.append(pyfunc)
 print
 for pyfunc in py_functions:
     print pyfunc
