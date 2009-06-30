@@ -6,6 +6,10 @@ from pyparsing import (Word, Combine, Optional, alphas, alphanums, oneOf,
 header = "/usr/include/GL/gl.h"
 testdata = open(header).read()
 
+functions_skip = [
+        "glCreateDebugObjectMESA",
+        ]
+
 ident = Word(alphas, alphanums + "_")
 vartype = (Optional("const") + Combine(ident + Optional(Word("*")),
         adjacent = False))
@@ -24,10 +28,12 @@ for fn, s, e in typedef.scanString(testdata):
 print
 py_functions = []
 for fn, s, e in functionCall.scanString(testdata):
+    skip = False
+    if fn.name in functions_skip:
+        skip = True
     func =   'void c_%s "%s"(' % (fn.name, fn.name)
     pyfunc = "def %s(" % fn.name
     pyfunc_args = ""
-    skip = False
     for a in fn.args:
         a_type = a.type[-1]
         if a_type[-1] == "*":
