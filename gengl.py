@@ -1,10 +1,13 @@
+#! /usr/bin/env python
+
 from pyparsing import (Word, Combine, Optional, alphas, alphanums, oneOf,
         delimitedList, Group)
 
 testdata = open("/usr/include/GL/gl.h").read()
 
 ident = Word(alphas, alphanums + "_")
-vartype = Combine( ident + Optional(Word("*")), adjacent = False)
+vartype = Optional(Word("const")) + Combine(ident + Optional(Word("*")),
+        adjacent = False)
 arglist = delimitedList( Group(vartype.setResultsName("type") + \
         ident.setResultsName("name")) )
 functionCall = ident.setResultsName("name") + \
