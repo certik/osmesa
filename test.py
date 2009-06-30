@@ -1,6 +1,8 @@
 import osmesa
 
 import pyglet
+pyglet.options['debug_lib'] = True
+#pyglet.options['debug_trace'] = True
 from pyglet.gl import (glMatrixMode, glFinish, GL_PROJECTION, glLoadIdentity,
         glOrtho, glPushMatrix, GL_MODELVIEW, glRotatef, glTranslatef,
         glMaterialfv, GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, glPopMatrix,
@@ -35,5 +37,5 @@ glPopMatrix()
 #glFinish()
 
 osmesa.sphere(180)
-#osmesa.sphere2(0.5, 5, 5)
+osmesa.sphere2(1, 5, 5)
 osmesa.free_ctx()
