@@ -87,7 +87,18 @@ def glMaterialfv(face, pname, params):
 def glNormalPointer(type, stride, ptr):
     # this only works if type == GL_FLOAT
     cdef ndarray a = array(ptr, dtype="float32")
+    print a
+    print a.strides[0]
     c_glNormalPointer(type, stride, <GLvoid *> (&a.data[0]))
+
+def glVertexPointer(size, type, stride, ptr):
+    cdef ndarray a = array(ptr, dtype="float32")
+    c_glVertexPointer(size, type, stride, <GLvoid *> (&a.data[0]))
+
+def glDrawElements(mode, count, type, indices):
+    cdef ndarray a = array(indices, dtype="uint32")
+    c_glDrawElements(mode, count, type, <GLvoid *> (&a.data[0]))
+
 """
 print extra_code
 
