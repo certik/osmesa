@@ -46,6 +46,8 @@ This example demonstrates:
 
 '''
 
+import gl
+
 from math import pi, sin, cos
 
 from pyglet.gl import *
@@ -84,10 +86,10 @@ pyglet.clock.schedule(update)
 def on_draw():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
-    glTranslatef(0, 0, -4)
-    glRotatef(rz, 0, 0, 1)
-    glRotatef(ry, 0, 1, 0)
-    glRotatef(rx, 1, 0, 0)
+    gl.glTranslatef(0, 0, -4)
+    gl.glRotatef(rz, 0, 0, 1)
+    gl.glRotatef(ry, 0, 1, 0)
+    gl.glRotatef(rx, 1, 0, 0)
     torus.draw()
 
 def setup():
