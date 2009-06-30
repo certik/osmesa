@@ -145,20 +145,12 @@ void render_image(void)
 
 void sph(double angle)
 {
-   GLfloat blue_mat[]  = { 1, 1, 0, 1.0 };
-
-   glMatrixMode(GL_PROJECTION);
-   glLoadIdentity();
-   glOrtho(-2.5, 2.5, -2.5, 2.5, -10.0, 10.0);
-   glMatrixMode(GL_MODELVIEW);
+   GLfloat blue_mat[]  = { 1, 1, 0, 1 };
 
    glPushMatrix();
-       glRotatef(angle, 1.0, 0.0, 0.0);
-       glPushMatrix();
-           glTranslatef(0.75, 0.0, -1.0);
-           glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, blue_mat );
-           Sphere(1.0, 20, 20);
-       glPopMatrix();
+       glTranslatef(0.75, 0.0, 0);
+       glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, blue_mat );
+       Sphere(1.0, 20, 20);
    glPopMatrix();
 
    glFinish();
