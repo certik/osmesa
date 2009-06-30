@@ -56,7 +56,7 @@ from pyglet.gl import (GL_DEPTH_TEST, GL_CULL_FACE, GL_LIGHTING, GL_LIGHT0,
 
         GLfloat, GLuint,
 
-        glGenLists, glNewList, glVertexPointer,
+        glGenLists, glVertexPointer,
         glNormalPointer, gluPerspective,
         )
 import pyglet
@@ -183,7 +183,7 @@ class Torus(object):
 
         # Compile a display list
         self.list = glGenLists(1)
-        glNewList(self.list, GL_COMPILE)
+        gl.glNewList(self.list, GL_COMPILE)
 
         gl.glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT)
         gl.glEnableClientState(GL_VERTEX_ARRAY)
