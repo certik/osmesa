@@ -13,7 +13,7 @@ arglist = delimitedList( Group(vartype.setResultsName("type") + \
         ident.setResultsName("name")) )
 functionCall = ident.setResultsName("name") + \
         "(" + (arglist.setResultsName("args") | "void") + ")" + ";"
-typedef = "typedef" + Optional("unsigned") + oneOf("int char short float void") + ident + ";"
+typedef = "typedef" + Optional("unsigned") + ident + ident + ";"
 
 print """cdef extern from "%s":""" % (header)
 for fn, s, e in typedef.scanString(testdata):
