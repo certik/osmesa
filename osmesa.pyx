@@ -3,6 +3,7 @@ cdef extern int init_context(int w, int h)
 cdef extern void free_context()
 
 cdef extern void sph(double angle)
+cdef extern void Sphere(float radius, int slices, int stacks)
 
 def render():
     render_image()
@@ -17,3 +18,6 @@ def free_ctx():
 
 def sphere(angle):
     sph(angle)
+
+def sphere2(float radius, int slices, int stacks):
+    Sphere(radius, slices, stacks)

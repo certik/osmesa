@@ -24,8 +24,7 @@
 #include "GL/osmesa.h"
 #include "GL/glu.h"
 
-static void
-Sphere(float radius, int slices, int stacks)
+void Sphere(float radius, int slices, int stacks)
 {
    GLUquadric *q = gluNewQuadric();
    gluQuadricNormals(q, GLU_SMOOTH);
