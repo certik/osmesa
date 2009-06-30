@@ -57,7 +57,7 @@ from pyglet.gl import (GL_DEPTH_TEST, GL_CULL_FACE, GL_LIGHTING, GL_LIGHT0,
         GLfloat, GLuint,
 
         glGenLists, glNewList, glVertexPointer,
-        glNormalPointer, glDrawElements, gluPerspective,
+        glNormalPointer, gluPerspective,
         )
 import pyglet
 
@@ -180,7 +180,6 @@ class Torus(object):
                 p = i * inner_slices + j
                 indices.extend([p, p + inner_slices, p + inner_slices + 1])
                 indices.extend([p,  p + inner_slices + 1, p + 1])
-        indices = (GLuint * len(indices))(*indices)
 
         # Compile a display list
         self.list = glGenLists(1)
@@ -190,9 +189,6 @@ class Torus(object):
         gl.glEnableClientState(GL_VERTEX_ARRAY)
         gl.glEnableClientState(GL_NORMAL_ARRAY)
         glVertexPointer(3, GL_FLOAT, 0, vertices)
-        #import IPython
-        #IPython.set_trace()
-        #print old_normals, len(old_normals)
         glNormalPointer(GL_FLOAT, 0, normals)
         gl.glDrawElements(GL_TRIANGLES, len(indices), GL_UNSIGNED_INT, indices)
         gl.glPopClientAttrib()
