@@ -94,10 +94,10 @@ def on_draw():
 
 def setup():
     # One-time GL setup
-    glClearColor(1, 1, 1, 1)
-    glColor3f(1, 0, 0)
-    glEnable(GL_DEPTH_TEST)
-    glEnable(GL_CULL_FACE)
+    gl.glClearColor(1, 1, 1, 1)
+    gl.glColor3f(1, 0, 0)
+    gl.glEnable(GL_DEPTH_TEST)
+    gl.glEnable(GL_CULL_FACE)
 
     # Uncomment this line for a wireframe view
     #glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
@@ -105,9 +105,9 @@ def setup():
     # Simple light setup.  On Windows GL_LIGHT0 is enabled by default,
     # but this is not the case on Linux or Mac, so remember to always 
     # include it.
-    glEnable(GL_LIGHTING)
-    glEnable(GL_LIGHT0)
-    glEnable(GL_LIGHT1)
+    gl.glEnable(GL_LIGHTING)
+    gl.glEnable(GL_LIGHT0)
+    gl.glEnable(GL_LIGHT1)
 
     # Define a simple function to create ctypes arrays of floats:
     def vec(*args):
