@@ -889,7 +889,7 @@ def glLighti(light, pname, param):
     c_glLighti(light, pname, param)
 
 def glLightfv(light, pname, params):
-    cdef ndarray a = array(params, dtype="float")
+    cdef ndarray a = array(params, dtype="float32")
     c_glLightfv(light, pname, <GLfloat *> (&a.data[0]))
 
 def glLightModelf(pname, param):
