@@ -1,5 +1,6 @@
-import pyglet
 import osmesa
+
+import pyglet
 from pyglet.gl import (glMatrixMode, glFinish, GL_PROJECTION, glLoadIdentity,
         glOrtho, glPushMatrix, GL_MODELVIEW, glRotatef, glTranslatef,
         glMaterialfv, GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, glPopMatrix,
