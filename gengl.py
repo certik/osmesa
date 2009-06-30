@@ -8,6 +8,10 @@ testdata = open(header).read()
 
 functions_skip = [
         "glCreateDebugObjectMESA",
+        "glProgramCallbackMESA",
+        "glClearDebugLogMESA",
+        "glGetDebugLogMESA",
+        "glGetDebugLogLengthMESA",
         "glBlendEquationSeparateATI",
         ]
 
@@ -22,6 +26,10 @@ typedef = "typedef" + Optional("unsigned") + Optional("signed") + \
         ident + ident + ";"
 
 known_types = []
+print """\
+from numpy import array
+from numpy cimport ndarray
+"""
 print """cdef extern from "%s":""" % (header)
 for fn, s, e in typedef.scanString(testdata):
     print "    ctypedef", " ".join(fn[1:-1])
@@ -29,9 +37,11 @@ for fn, s, e in typedef.scanString(testdata):
 print
 py_functions = []
 for fn, s, e in functionCall.scanString(testdata):
+    interface = True
     skip = False
     if fn.name in functions_skip:
         skip = True
+        interface = False
     func =   'void c_%s "%s"(' % (fn.name, fn.name)
     pyfunc = "def %s(" % fn.name
     pyfunc_args = ""
@@ -54,7 +64,7 @@ for fn, s, e in functionCall.scanString(testdata):
     func += ")"
     pyfunc += pyfunc_args+"):\n"
     pyfunc += "    c_%s(%s)\n" % (fn.name, pyfunc_args)
-    if skip:
+    if skip and not interface:
         func = "# " + func
     func = "    " + func
     print func
@@ -63,3 +73,12 @@ for fn, s, e in functionCall.scanString(testdata):
 print
 for pyfunc in py_functions:
     print pyfunc
+
+print
+extra_code = """\
+def glLightfv(light, pname, params):
+    cdef ndarray a = array(params, dtype="float32")
+    c_glLightfv(light, pname, <GLfloat *> (&a.data[0]))
+"""
+print extra_code
+
