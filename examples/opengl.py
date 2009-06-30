@@ -57,8 +57,7 @@ from pyglet.gl import (GL_DEPTH_TEST, GL_CULL_FACE, GL_LIGHTING, GL_LIGHT0,
         GLfloat, GLuint,
 
         glLightfv, glMaterialfv, glGenLists, glNewList, glVertexPointer,
-        glNormalPointer, glDrawElements, glViewport, glMatrixMode,
-        glLoadIdentity, gluPerspective,
+        glNormalPointer, glDrawElements, gluPerspective,
         )
 import pyglet
 
@@ -76,11 +75,11 @@ except pyglet.window.NoSuchConfigException:
 @window.event
 def on_resize(width, height):
     # Override the default on_resize handler to create a 3D projection
-    glViewport(0, 0, width, height)
-    glMatrixMode(GL_PROJECTION)
-    glLoadIdentity()
+    gl.glViewport(0, 0, width, height)
+    gl.glMatrixMode(GL_PROJECTION)
+    gl.glLoadIdentity()
     gluPerspective(60., width / float(height), .1, 1000.)
-    glMatrixMode(GL_MODELVIEW)
+    gl.glMatrixMode(GL_MODELVIEW)
     return pyglet.event.EVENT_HANDLED
 
 def update(dt):
