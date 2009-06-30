@@ -84,8 +84,8 @@ pyglet.clock.schedule(update)
 
 @window.event
 def on_draw():
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-    glLoadIdentity()
+    gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    gl.glLoadIdentity()
     gl.glTranslatef(0, 0, -4)
     gl.glRotatef(rz, 0, 0, 1)
     gl.glRotatef(ry, 0, 1, 0)
