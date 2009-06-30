@@ -16,18 +16,35 @@ functionCall = ident.setResultsName("name") + \
 typedef = "typedef" + Optional("unsigned") + Optional("signed") + \
         ident + ident + ";"
 
+known_types = []
 print """cdef extern from "%s":""" % (header)
 for fn, s, e in typedef.scanString(testdata):
     print "    ctypedef", " ".join(fn[1:-1])
+    known_types.append(fn[-2])
 print
 py_functions = []
 for fn, s, e in functionCall.scanString(testdata):
     func =   '    void c_%s "%s"(' % (fn.name, fn.name)
     pyfunc = "def %s(" % fn.name
     pyfunc_args = ""
+    skip = False
     for a in fn.args:
+        a_type = a.type[-1]
+        if a_type[-1] == "*":
+            # skip pointers for now
+            skip = True
+            break
+        if a_type[-1] == "*":
+            a_type = a_type[:-1]
+        if a_type[-1] == "*":
+            a_type = a_type[:-1]
+        if not a_type in known_types:
+            skip = True
+            break
         func += "%s %s, " % (a.type[-1], a.name)
         pyfunc_args += "%s, " % (a.name)
+    if skip:
+        continue
     if len(fn.args) > 0:
         func = func[:-2]
         pyfunc_args = pyfunc_args[:-2]
