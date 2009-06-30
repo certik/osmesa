@@ -6,12 +6,12 @@ from pyparsing import (Word, Combine, Optional, alphas, alphanums, oneOf,
 testdata = open("/usr/include/GL/gl.h").read()
 
 ident = Word(alphas, alphanums + "_")
-vartype = Optional(Word("const")) + Combine(ident + Optional(Word("*")),
-        adjacent = False)
+vartype = (Optional(Word("const")) + Combine(ident + Optional(Word("*")),
+        adjacent = False))
 arglist = delimitedList( Group(vartype.setResultsName("type") + \
         ident.setResultsName("name")) )
 functionCall = ident.setResultsName("name") + \
-        "(" + arglist.setResultsName("args") + ")" + ";"
+        "(" + (arglist.setResultsName("args") | Word("void")) + ")" + ";"
 
 for fn, s, e in functionCall.scanString(testdata):
     print fn.name, fn.return_type
