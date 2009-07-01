@@ -109,14 +109,12 @@ def glNormalPointer(type, stride, ptr):
     #print a
     #print a.strides[0]
     #c_glNormalPointer(type, stride, <GLvoid *> (&a.data[0]))
-    cdef object b = ptr
-    cdef CDataObject *a = <CDataObject *>b
-    cdef char *x = a.b_ptr
-    c_glNormalPointer(type, stride, <GLvoid *> x)
+    c_glNormalPointer(type, stride, <GLvoid *> ((<CDataObject *>ptr).b_ptr))
 
 def glVertexPointer(size, type, stride, ptr):
-    cdef ndarray a = array(ptr, dtype="float32")
-    c_glVertexPointer(size, type, stride, <GLvoid *> (&a.data[0]))
+    #cdef ndarray a = array(ptr, dtype="float32")
+    #c_glVertexPointer(size, type, stride, <GLvoid *> (&a.data[0]))
+    c_glVertexPointer(size, type, stride, <GLvoid *> ((<CDataObject *>ptr).b_ptr))
 
 def glDrawElements(mode, count, type, indices):
     cdef ndarray a = array(indices, dtype="uint32")

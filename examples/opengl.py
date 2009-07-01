@@ -56,7 +56,7 @@ from pyglet.gl import (GL_DEPTH_TEST, GL_CULL_FACE, GL_LIGHTING, GL_LIGHT0,
 
         GLfloat, GLuint,
 
-        glVertexPointer, glNormalPointer, gluPerspective,
+        gluPerspective,
         )
 import pyglet
 
@@ -184,7 +184,7 @@ class Torus(object):
         gl.glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT)
         gl.glEnableClientState(GL_VERTEX_ARRAY)
         gl.glEnableClientState(GL_NORMAL_ARRAY)
-        glVertexPointer(3, GL_FLOAT, 0, vertices)
+        gl.glVertexPointer(3, GL_FLOAT, 0, vertices)
         gl.glNormalPointer(GL_FLOAT, 0, normals)
         gl.glDrawElements(GL_TRIANGLES, len(indices), GL_UNSIGNED_INT, indices)
         gl.glPopClientAttrib()
