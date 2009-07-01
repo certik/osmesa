@@ -157,6 +157,7 @@ class Torus(object):
                 v += v_step
             u += u_step
 
+        # use numpy arrays and "ndarray" attribute in cython.
         vertices = gl.convert_float(vertices)
         normals = gl.convert_float(normals)
 
