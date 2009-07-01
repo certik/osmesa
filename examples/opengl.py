@@ -157,8 +157,8 @@ class Torus(object):
                 v += v_step
             u += u_step
 
-        #vertices = (GLfloat * len(vertices))(*vertices)
-        normals = (GLfloat * len(normals))(*normals)
+        vertices = gl.convert_float(vertices)
+        normals = gl.convert_float(normals)
 
         # Create a list of triangle indices.
         indices = []
@@ -175,16 +175,7 @@ class Torus(object):
         gl.glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT)
         gl.glEnableClientState(GL_VERTEX_ARRAY)
         gl.glEnableClientState(GL_NORMAL_ARRAY)
-        #ptr = vertices
-        from ctypes import c_float, POINTER
-        from numpy import array
-        #a = array(vertices, dtype="float32")
-        #ptr = a.ctypes.data_as(POINTER(c_float))
-        vertices = gl.convert_float(vertices)
-        #ptr = (c_float * len(ptr))(*ptr)
-        #vertices = ptr
         gl.glVertexPointer(3, GL_FLOAT, 0, vertices)
-        #print a
         gl.glNormalPointer(GL_FLOAT, 0, normals)
         gl.glDrawElements(GL_TRIANGLES, len(indices), GL_UNSIGNED_INT, indices)
         gl.glPopClientAttrib()
