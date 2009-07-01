@@ -39,6 +39,9 @@ cdef extern from "Python.h":
     ctypedef void PyTypeObject
 
 cdef struct CDataObject:
+    # The first 2 members very much depends on the current content of the
+    # "PyObject_HEAD" macro in Python. Once it changes, the code below will
+    # segfault.
     Py_ssize_t ob_refcnt
     PyTypeObject *ob_type
     char *b_ptr
