@@ -114,6 +114,8 @@ def glNormalPointer(type, stride, ptr):
 def glVertexPointer(size, type, stride, ptr):
     #cdef ndarray a = array(ptr, dtype="float32")
     #c_glVertexPointer(size, type, stride, <GLvoid *> (&a.data[0]))
+    #from ctypes import c_float
+    #ptr = (c_float * len(ptr))(*ptr)
     c_glVertexPointer(size, type, stride, <GLvoid *> ((<CDataObject *>ptr).b_ptr))
 
 def glDrawElements(mode, count, type, indices):
