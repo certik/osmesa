@@ -1,6 +1,14 @@
 from numpy import array
 from numpy cimport ndarray
 
+cdef extern from "Python.h":
+    ctypedef void PyTypeObject
+
+cdef struct CDataObject:
+    Py_ssize_t ob_refcnt
+    PyTypeObject *ob_type
+    char *b_ptr
+
 cdef extern from "/usr/include/GL/gl.h":
     ctypedef unsigned int GLenum
     ctypedef unsigned char GLboolean
@@ -1182,10 +1190,14 @@ def glMaterialfv(face, pname, params):
 
 def glNormalPointer(type, stride, ptr):
     # this only works if type == GL_FLOAT
-    cdef ndarray a = array(ptr, dtype="float32")
-    print a
-    print a.strides[0]
-    c_glNormalPointer(type, stride, <GLvoid *> (&a.data[0]))
+    #cdef ndarray a = array(ptr, dtype="float32")
+    #print a
+    #print a.strides[0]
+    #c_glNormalPointer(type, stride, <GLvoid *> (&a.data[0]))
+    cdef object b = ptr
+    cdef CDataObject *a = <CDataObject *>b
+    cdef char *x = a.b_ptr
+    c_glNormalPointer(type, stride, <GLvoid *> x)
 
 def glVertexPointer(size, type, stride, ptr):
     cdef ndarray a = array(ptr, dtype="float32")

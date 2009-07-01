@@ -163,6 +163,10 @@ class Torus(object):
         #print array(old_normals)
         # Create ctypes arrays of the lists
         vertices = (GLfloat * len(vertices))(*vertices)
+        #print vertices
+        #print vertices.__class__.__name__
+        #import IPython
+        #IPython.set_trace()
         normals = (GLfloat * len(normals))(*normals)
 
         # Create a list of triangle indices.
@@ -181,7 +185,7 @@ class Torus(object):
         gl.glEnableClientState(GL_VERTEX_ARRAY)
         gl.glEnableClientState(GL_NORMAL_ARRAY)
         glVertexPointer(3, GL_FLOAT, 0, vertices)
-        glNormalPointer(GL_FLOAT, 0, normals)
+        gl.glNormalPointer(GL_FLOAT, 0, normals)
         gl.glDrawElements(GL_TRIANGLES, len(indices), GL_UNSIGNED_INT, indices)
         gl.glPopClientAttrib()
 
