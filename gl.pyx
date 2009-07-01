@@ -1213,3 +1213,10 @@ def glDrawElements(mode, count, type, indices):
 def glGenLists(range):
     return c_glGenLists(range)
 
+def convert_float(ptr):
+    """
+    Converts a python sequence of floats to a ctype float array.
+    """
+    from ctypes import c_float
+    return (c_float * len(ptr))(*ptr)
+
