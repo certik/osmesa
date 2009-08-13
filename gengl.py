@@ -1,10 +1,8 @@
 #! /usr/bin/env python
 
-from pyparsing import (Word, Combine, Optional, alphas, alphanums, oneOf,
-        delimitedList, Group)
+from hparser import HParser
 
-header = "/usr/include/GL/gl.h"
-testdata = open(header).read()
+h = HParser("/usr/include/GL/gl.h")
 
 functions_skip = [
         "glCreateDebugObjectMESA",
@@ -19,86 +17,15 @@ functions_manual = [
         "glGenLists",
         ]
 
-ident = Word(alphas, alphanums + "_")
-oct_number = Combine("0x" + Word(alphanums))
-vartype = (Optional("const") + Combine(ident + Optional(Word("*")),
-        adjacent = False))
-arglist = delimitedList( Group(vartype.setResultsName("type") + \
-        ident.setResultsName("name")) )
-functionCall = "GLAPI" + ident.setResultsName("return_type") + "GLAPIENTRY" + \
-        ident.setResultsName("name") + \
-        "(" + (arglist.setResultsName("args") | "void") + ")" + ";"
-typedef = "typedef" + Optional("unsigned") + Optional("signed") + \
-        ident + ident + ";"
-define = "#define" + ident + oct_number
-known_types = []
-defines = []
-print """\
-from numpy import array
-from numpy cimport ndarray
-
-cdef extern from "Python.h":
-    ctypedef void PyTypeObject
-
-cdef struct CDataObject:
-    # The first 2 members very much depends on the current content of the
-    # "PyObject_HEAD" macro in Python. Once it changes, the code below will
-    # segfault.
-    Py_ssize_t ob_refcnt
-    PyTypeObject *ob_type
-    char *b_ptr
-
-cdef extern from "%s":\
-""" % (header)
-for fn, s, e in typedef.scanString(testdata):
-    print "    ctypedef", " ".join(fn[1:-1])
-    known_types.append(fn[-2])
+h.print_header()
+h.parse_typedefs()
 print
-for fn, s, e in define.scanString(testdata):
-    id_define = fn[1]
-    id_number = fn[2]
-    defines.append("%s = c_%s" % (id_define, id_define))
-    print '    int c_%s "%s"' % (id_define, id_define)
+defines = h.parse_defines()
 print
-py_functions = []
-for fn, s, e in functionCall.scanString(testdata):
-    interface = True
-    skip = False
-    if fn.name in functions_skip:
-        skip = True
-        interface = False
-    if fn.name in functions_manual:
-        skip = True
-    func =   '%s c_%s "%s"(' % (fn.return_type, fn.name, fn.name)
-    pyfunc = "def %s(" % fn.name
-    pyfunc_args = ""
-    for a in fn.args:
-        a_type = a.type[-1]
-        if a_type[-1] == "*":
-            # skip pointers for now
-            skip = True
-        if a_type[-1] == "*":
-            a_type = a_type[:-1]
-        if a_type[-1] == "*":
-            a_type = a_type[:-1]
-        if not a_type in known_types:
-            skip = True
-        func += "%s %s, " % (a.type[-1], a.name)
-        pyfunc_args += "%s, " % (a.name)
-    if len(fn.args) > 0:
-        func = func[:-2]
-        pyfunc_args = pyfunc_args[:-2]
-    func += ")"
-    pyfunc += pyfunc_args+"):\n"
-    pyfunc += "    c_%s(%s)\n" % (fn.name, pyfunc_args)
-    if skip and not interface:
-        func = "# " + func
-    func = "    " + func
-    print func
-    if not skip:
-        py_functions.append(pyfunc)
+py_functions = h.parse_functions(functions_skip=functions_skip,
+        functions_manual=functions_manual)
 print
-print 
+print
 print "# " + "-"*15 +" Wrappers " + "-"*15
 print
 for define in defines:
