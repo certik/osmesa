@@ -1,8 +1,4 @@
-all:
-	cython osmesa.pyx
-	gcc -fPIC -I/usr/include/python2.6 -c -o osmesa.o osmesa.c
-	gcc -fPIC -c -o osdemo.o osdemo.c
-	gcc -shared -o osmesa.so osmesa.o osdemo.o -lOSMesa -lGLU -lGL
+all: gl glu
 
 gl:
 	python gengl.py > gl.pyx
@@ -15,3 +11,10 @@ glu:
 	cython glu.pyx
 	gcc -fPIC -I/usr/include/python2.6 -c -o glu.o glu.c
 	gcc -shared -o glu.so glu.o -lGL -lGLU
+
+demo:
+	cython osmesa.pyx
+	gcc -fPIC -I/usr/include/python2.6 -c -o osmesa.o osmesa.c
+	gcc -fPIC -c -o osdemo.o osdemo.c
+	gcc -shared -o osmesa.so osmesa.o osdemo.o -lOSMesa -lGLU -lGL
+
