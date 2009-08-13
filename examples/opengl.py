@@ -15,7 +15,6 @@ This example demonstrates:
 
 from math import pi, sin, cos
 
-from pyglet.gl import gluPerspective
 import pyglet
 
 from gl import (GL_DEPTH_TEST, GL_CULL_FACE, GL_LIGHTING, GL_LIGHT0, GL_LIGHT1,
@@ -24,6 +23,7 @@ from gl import (GL_DEPTH_TEST, GL_CULL_FACE, GL_LIGHTING, GL_LIGHT0, GL_LIGHT1,
         GL_CLIENT_VERTEX_ARRAY_BIT, GL_VERTEX_ARRAY, GL_NORMAL_ARRAY, GL_FLOAT,
         GL_TRIANGLES, GL_UNSIGNED_INT, GL_PROJECTION, GL_MODELVIEW,
         GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_LINE)
+from glu import gluPerspective
 import gl
 
 try:
