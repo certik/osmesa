@@ -21,7 +21,9 @@ print h.get_header()
 for ctypedef in h.parse_typedefs():
     print ctypedef
 print
-defines = h.parse_defines()
+defines, wrappers = h.parse_defines()
+for define in defines:
+    print define
 print
 py_functions = h.parse_functions(functions_skip=functions_skip,
         functions_manual=functions_manual)
@@ -29,7 +31,7 @@ print
 print
 print "# " + "-"*15 +" Wrappers " + "-"*15
 print
-for define in defines:
+for define in wrappers:
     print define
 print
 for pyfunc in py_functions:

@@ -63,12 +63,13 @@ class HParser(object):
 
     def parse_defines(self):
         defines = []
+        wrappers = []
         for fn, s, e in define.scanString(self._data):
             id_define = fn[1]
             id_number = fn[2]
-            defines.append("%s = c_%s" % (id_define, id_define))
-            print '    int c_%s "%s"' % (id_define, id_define)
-        return defines
+            defines.append('    int c_%s "%s"' % (id_define, id_define))
+            wrappers.append("%s = c_%s" % (id_define, id_define))
+        return defines, wrappers
 
     def parse_functions(self, functions_skip=[], functions_manual=[]):
         py_functions = []
