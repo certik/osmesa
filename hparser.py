@@ -72,6 +72,7 @@ class HParser(object):
         return defines, wrappers
 
     def parse_functions(self, functions_skip=[], functions_manual=[]):
+        defines = []
         py_functions = []
         for fn, s, e in functionCall.scanString(self._data):
             interface = True
@@ -106,7 +107,7 @@ class HParser(object):
             if skip and not interface:
                 func = "# " + func
             func = "    " + func
-            print func
+            defines.append(func)
             if not skip:
                 py_functions.append(pyfunc)
-        return py_functions
+        return defines, py_functions

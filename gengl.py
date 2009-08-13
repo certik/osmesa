@@ -25,8 +25,12 @@ defines, wrappers = h.parse_defines()
 for define in defines:
     print define
 print
-py_functions = h.parse_functions(functions_skip=functions_skip,
-        functions_manual=functions_manual)
+functions_defines, py_functions = h.parse_functions(
+        functions_skip=functions_skip,
+        functions_manual=functions_manual
+        )
+for define in functions_defines:
+    print define
 print
 print
 print "# " + "-"*15 +" Wrappers " + "-"*15
@@ -36,7 +40,6 @@ for define in wrappers:
 print
 for pyfunc in py_functions:
     print pyfunc
-
 print
 extra_code = """\
 def glLightfv(light, pname, params):
