@@ -20,6 +20,7 @@ functions_manual = [
         ]
 
 ident = Word(alphas, alphanums + "_")
+oct_number = Combine("0x" + Word(alphanums))
 vartype = (Optional("const") + Combine(ident + Optional(Word("*")),
         adjacent = False))
 arglist = delimitedList( Group(vartype.setResultsName("type") + \
@@ -29,8 +30,9 @@ functionCall = "GLAPI" + ident.setResultsName("return_type") + "GLAPIENTRY" + \
         "(" + (arglist.setResultsName("args") | "void") + ")" + ";"
 typedef = "typedef" + Optional("unsigned") + Optional("signed") + \
         ident + ident + ";"
-
+define = "#define" + ident + oct_number
 known_types = []
+defines = []
 print """\
 from numpy import array
 from numpy cimport ndarray
@@ -51,6 +53,12 @@ cdef extern from "%s":\
 for fn, s, e in typedef.scanString(testdata):
     print "    ctypedef", " ".join(fn[1:-1])
     known_types.append(fn[-2])
+print
+for fn, s, e in define.scanString(testdata):
+    id_define = fn[1]
+    id_number = fn[2]
+    defines.append("%s = c_%s" % (id_define, id_define))
+    print '    int c_%s "%s"' % (id_define, id_define)
 print
 py_functions = []
 for fn, s, e in functionCall.scanString(testdata):
@@ -89,6 +97,12 @@ for fn, s, e in functionCall.scanString(testdata):
     print func
     if not skip:
         py_functions.append(pyfunc)
+print
+print 
+print "# " + "-"*15 +" Wrappers " + "-"*15
+print
+for define in defines:
+    print define
 print
 for pyfunc in py_functions:
     print pyfunc
