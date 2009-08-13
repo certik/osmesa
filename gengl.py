@@ -17,8 +17,9 @@ functions_manual = [
         "glGenLists",
         ]
 
-h.print_header()
-h.parse_typedefs()
+print h.get_header()
+for ctypedef in h.parse_typedefs():
+    print ctypedef
 print
 defines = h.parse_defines()
 print

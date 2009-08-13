@@ -32,8 +32,8 @@ class HParser(object):
 
         self._known_types = []
 
-    def print_header(self):
-        print dedent("""\
+    def get_header(self):
+        return dedent("""\
         from numpy import array
         from numpy cimport ndarray
 
@@ -52,12 +52,14 @@ class HParser(object):
 
 
     def parse_typedefs(self):
+        ctypedefs = []
         for fn, s, e in typedef.scanString(self._data):
             if fn[1] == "struct":
-                print "    ctypedef", " ".join(fn[1:3])
+                ctypedefs.append("    ctypedef " + " ".join(fn[1:3]))
             else:
-                print "    ctypedef", " ".join(fn[1:-1])
+                ctypedefs.append("    ctypedef " + " ".join(fn[1:-1]))
             self._known_types.append(fn[-2])
+        return ctypedefs
 
     def parse_defines(self):
         defines = []
