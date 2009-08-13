@@ -3,12 +3,14 @@
 from hparser import HParser
 
 h_gl = HParser("/usr/include/GL/gl.h")
-h_gl.parse_typedefs()
 h = HParser("/usr/include/GL/glu.h")
-# use the types from gl.h:
-h._known_types = h_gl._known_types
 
 print h.get_header()
+
+for ctypedef in h_gl.parse_typedefs():
+    print ctypedef
+# use the types from gl.h:
+h._known_types = h_gl._known_types
 for ctypedef in h.parse_typedefs():
     print ctypedef
 print
