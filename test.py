@@ -44,4 +44,6 @@ gl.glPopMatrix();
 
 gl.glFinish();
 
+print gl.py_get_buffer()
+
 gl.free_ctx()

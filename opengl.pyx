@@ -1,3 +1,9 @@
+cdef extern from "stdlib.h":
+    ctypedef unsigned long size_t
+    void *malloc (size_t size)
+    void free(void *mem)
+    void *memcpy(void *dst, void *src, long n)
+
 from numpy import array
 from numpy cimport ndarray
 
@@ -2826,6 +2832,23 @@ def convert_float(ptr):
     """
     from ctypes import c_float
     return (c_float * len(ptr))(*ptr)
+
+cdef extern void * get_buffer()
+cdef extern int get_width()
+cdef extern int get_height()
+
+cdef ndarray array_int_c2numpy(int *A, int len):
+    from numpy import empty
+    cdef ndarray vec = empty([len], dtype="uint8")
+    cdef int *pvec = <int *>vec.data
+    memcpy(pvec, A, len*sizeof(int))
+    return vec
+
+def py_get_buffer():
+    w = get_width()
+    h = get_height()
+    print w, h
+    return array_int_c2numpy(<int *>(get_buffer()), 10)
 
 cdef extern int init_context(int w, int h)
 cdef extern void free_context()

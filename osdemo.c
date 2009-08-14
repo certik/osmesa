@@ -55,6 +55,14 @@ void *buffer;
 static int Width = 400;
 static int Height = 400;
 
+void *get_buffer()
+{
+    return buffer;
+}
+
+int get_width() { return Width; }
+int get_height() { return Height; }
+
 int init_context(int w, int h)
 {
     Width = w;
