@@ -9,7 +9,6 @@ w = 400
 h = 400
 
 osmesa.init_ctx(w, h)
-#osmesa.render()
 gl.glLightfv(gl.GL_LIGHT0, gl.GL_AMBIENT, [0, 0, 0, 1]);
 gl.glLightfv(gl.GL_LIGHT0, gl.GL_POSITION, [1, 1, 1, 0]);
 
@@ -49,9 +48,5 @@ gl.glPopMatrix();
 
 
 gl.glFinish();
-#gl.glVertex3f(1.0, -1.0, 0.0)
-#osmesa.glVertex3f(1.0, -1.0, 0.0)
-#osmesa.render2()
-#osmesa.render3()
 
 osmesa.free_ctx()
