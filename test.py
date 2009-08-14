@@ -37,21 +37,21 @@ osmesa.render()
 #gl.glVertex3f(-1.0,-1.0, 0.0);
 #gl.glVertex3f( 1.0,-1.0, 0.0);
 #gl.glEnd();
-#gl.glPushMatrix()
-#gl.glTranslatef(0.0,1.0,0.0);
-#gl.glBegin(gl.GL_QUADS);
-#gl.glVertex3f(-1.0, 1.0, 0.0);
-#gl.glVertex3f( 1.0, 1.0, 0.0);
-#gl.glVertex3f( 1.0,-1.0, 0.0);
-#gl.glVertex3f(-1.0,-1.0, 0.0);
-#gl.glEnd();
-#gl.glPopMatrix();
+gl.glPushMatrix()
+gl.glTranslatef(0.0,-1.0,0.0);
+gl.glBegin(gl.GL_QUADS);
+gl.glVertex3f(-1.0, 1.0, 0.0);
+gl.glVertex3f( 1.0, 1.0, 0.0);
+gl.glVertex3f( 1.0,-1.0, 0.0);
+gl.glVertex3f(-1.0,-1.0, 0.0);
+gl.glEnd();
+gl.glPopMatrix();
 
 
-#gl.glFinish();
-gl.glVertex3f(1.0, -1.0, 0.0)
+gl.glFinish();
+#gl.glVertex3f(1.0, -1.0, 0.0)
 #osmesa.glVertex3f(1.0, -1.0, 0.0)
 #osmesa.render2()
-osmesa.render3()
+#osmesa.render3()
 
 osmesa.free_ctx()

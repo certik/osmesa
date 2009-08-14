@@ -130,12 +130,6 @@ void render_image(void)
   glEnd();
    glPopMatrix();
   glFinish();
-
-   glPushMatrix();
-  glTranslatef(0.0f,1.0f,0.0f);
-  glBegin(GL_QUADS);
-    glVertex3f(-1.0f, 1.0f, 0.0f);
-    glVertex3f( 1.0f, 1.0f, 0.0f);
 }
 
 void render_image2(void)
