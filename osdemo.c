@@ -113,6 +113,23 @@ void render_image(void)
    glClearColor(1, 1, 0.8, 1);
    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
+
+   glPushMatrix();
+  glTranslatef(-1.5f,0.0f,-.2f);
+  glBegin(GL_TRIANGLES);
+    glVertex3f( 0.0f, 1.0f, 0.0f);
+    glVertex3f(-1.0f,-1.0f, 0.0f);
+    glVertex3f( 1.0f,-1.0f, 0.0f);
+  glEnd();
+  glTranslatef(3.0f,0.0f,0.0f);
+  glBegin(GL_QUADS);
+    glVertex3f(-1.0f, 1.0f, 0.0f);
+    glVertex3f( 1.0f, 1.0f, 0.0f);
+    glVertex3f( 1.0f,-1.0f, 0.0f);
+    glVertex3f(-1.0f,-1.0f, 0.0f);
+  glEnd();
+   glPopMatrix();
+
    glPushMatrix();
    glTranslatef(-0.75, 0.5, 0.0);
    glRotatef(90.0, 1.0, 0.0, 0.0);
