@@ -2833,9 +2833,28 @@ def convert_float(ptr):
     from ctypes import c_float
     return (c_float * len(ptr))(*ptr)
 
+cdef extern int init_context(int w, int h)
+cdef extern void free_context()
 cdef extern void * get_buffer()
 cdef extern int get_width()
 cdef extern int get_height()
+
+
+cdef class Context:
+    cdef void *_buffer
+    cdef int _w
+    cdef int _h
+
+    def __init__(self, int w, int h):
+        init_context(w, h)
+        self._w = w
+        self._h = h
+
+    def __del__(self):
+        free_context()
+
+    def get_buffer(self):
+        return array_int_c2numpy(<int *>(get_buffer()), self._w * self._h * 4)
 
 cdef ndarray array_int_c2numpy(int *A, int len):
     from numpy import empty
@@ -2843,22 +2862,6 @@ cdef ndarray array_int_c2numpy(int *A, int len):
     cdef int *pvec = <int *>vec.data
     memcpy(pvec, A, len*sizeof(char))
     return vec
-
-def py_get_buffer():
-    w = get_width()
-    h = get_height()
-    return array_int_c2numpy(<int *>(get_buffer()), w*h*4)
-
-cdef extern int init_context(int w, int h)
-cdef extern void free_context()
-
-def init_ctx(int width, int height):
-    r = init_context(width, height)
-    if r == -1:
-        raise Exception("init_context failed")
-
-def free_ctx():
-    free_context()
 
 from numpy import array
 from numpy cimport ndarray
