@@ -2841,14 +2841,13 @@ cdef ndarray array_int_c2numpy(int *A, int len):
     from numpy import empty
     cdef ndarray vec = empty([len], dtype="uint8")
     cdef int *pvec = <int *>vec.data
-    memcpy(pvec, A, len*sizeof(int))
+    memcpy(pvec, A, len*sizeof(char))
     return vec
 
 def py_get_buffer():
     w = get_width()
     h = get_height()
-    print w, h
-    return array_int_c2numpy(<int *>(get_buffer()), 10)
+    return array_int_c2numpy(<int *>(get_buffer()), w*h*4)
 
 cdef extern int init_context(int w, int h)
 cdef extern void free_context()
