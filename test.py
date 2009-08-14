@@ -1,14 +1,9 @@
-import ctypes
-import sys
-sys.setdlopenflags(sys.getdlopenflags() | ctypes.RTLD_GLOBAL)
-
 import gl
-import osmesa
 
 w = 400
 h = 400
 
-osmesa.init_ctx(w, h)
+gl.init_ctx(w, h)
 gl.glLightfv(gl.GL_LIGHT0, gl.GL_AMBIENT, [0, 0, 0, 1]);
 gl.glLightfv(gl.GL_LIGHT0, gl.GL_POSITION, [1, 1, 1, 0]);
 
@@ -49,4 +44,4 @@ gl.glPopMatrix();
 
 gl.glFinish();
 
-osmesa.free_ctx()
+gl.free_ctx()
