@@ -7,6 +7,13 @@ cdef extern void free_context()
 cdef extern void sph(double angle)
 cdef extern void Sphere(float radius, int slices, int stacks)
 
+cdef extern from "/usr/include/GL/gl.h":
+    ctypedef float GLfloat
+    void c_glVertex3f "glVertex3f"(GLfloat x, GLfloat y, GLfloat z)
+
+def glVertex3f(x, y, z):
+    c_glVertex3f(x, y, z)
+
 def render():
     render_image()
 
