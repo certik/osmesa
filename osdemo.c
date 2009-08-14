@@ -111,6 +111,7 @@ void render_image(void)
    glClearColor(1, 1, 0.8, 1);
    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
+   /*
    glPushMatrix();
   glTranslatef(-1.5f,0.0f,-5.f);
   glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, red_mat );
@@ -130,6 +131,7 @@ void render_image(void)
   glEnd();
    glPopMatrix();
   glFinish();
+   */
 }
 
 void render_image2(void)
