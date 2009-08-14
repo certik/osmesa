@@ -1,17 +1,6 @@
 import osmesa
 import gl
 
-def vec(*args):
-    return (GLfloat * len(args))(*args)
-
-def sphere(radius, slices, stacks):
-    q = gluNewQuadric();
-    gluQuadricNormals(q, GLU_SMOOTH);
-    gluSphere(q, radius, slices, stacks);
-    gluDeleteQuadric(q);
-
-
-
 w = 400
 h = 400
 
@@ -33,17 +22,17 @@ osmesa.render()
 #gl.glClear( gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT );
 
 
-gl.glPushMatrix();
-gl.glTranslatef(-1.5,0.0,-5.);
-gl.glMaterialfv( gl.GL_FRONT_AND_BACK, gl.GL_AMBIENT_AND_DIFFUSE,
-[1.0, 0.2, 0.2, 1.0] );
-gl.glBegin(gl.GL_TRIANGLES);
-gl.glColor3f(1., 0., .0);
-gl.glVertex3f( 0.0, 1.0, 0.0);
-gl.glColor3f(.0, 1., .0);
-gl.glVertex3f(-1.0,-1.0, 0.0);
-gl.glVertex3f( 1.0,-1.0, 0.0);
-gl.glEnd();
+#gl.glPushMatrix();
+#gl.glTranslatef(-1.5,0.0,-5.);
+#gl.glMaterialfv( gl.GL_FRONT_AND_BACK, gl.GL_AMBIENT_AND_DIFFUSE,
+#[1.0, 0.2, 0.2, 1.0] );
+#gl.glBegin(gl.GL_TRIANGLES);
+#gl.glColor3f(1., 0., .0);
+#gl.glVertex3f( 0.0, 1.0, 0.0);
+#gl.glColor3f(.0, 1., .0);
+#gl.glVertex3f(-1.0,-1.0, 0.0);
+#gl.glVertex3f( 1.0,-1.0, 0.0);
+#gl.glEnd();
 gl.glTranslatef(3.0,0.0,0.0);
 gl.glBegin(gl.GL_QUADS);
 gl.glVertex3f(-1.0, 1.0, 0.0);

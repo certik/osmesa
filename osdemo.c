@@ -131,7 +131,7 @@ void render_image(void)
     glVertex3f(-1.0f,-1.0f, 0.0f);
   glEnd();
    glPopMatrix();
-
+/*
    glPushMatrix();
    glTranslatef(-0.75, 0.5, 0.0);
    glRotatef(90.0, 1.0, 0.0, 0.0);
@@ -151,8 +151,9 @@ void render_image(void)
    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, blue_mat );
    Sphere(1.0, 20, 20);
    glPopMatrix();
+   */
 
-   glFinish();
+   //glFinish();
 }
 
 void sph(double angle)
