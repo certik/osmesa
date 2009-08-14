@@ -87,10 +87,6 @@ def convert_float(ptr):
     from ctypes import c_float
     return (c_float * len(ptr))(*ptr)
 
-cdef extern void * get_buffer()
-cdef extern int get_width()
-cdef extern int get_height()
-
 cdef ndarray array_int_c2numpy(int *A, int len):
     from numpy import empty
     cdef ndarray vec = empty([len], dtype="uint8")
@@ -98,21 +94,34 @@ cdef ndarray array_int_c2numpy(int *A, int len):
     memcpy(pvec, A, len*sizeof(char))
     return vec
 
-def py_get_buffer():
-    w = get_width()
-    h = get_height()
-    return array_int_c2numpy(<int *>(get_buffer()), w*h*4)
+cdef extern from "GL/osmesa.h":
+    int OSMESA_RGBA
+    int GL_UNSIGNED_BYTE
+    ctypedef struct OSMesaContext:
+        pass
+    OSMesaContext OSMesaCreateContextExt(...)
+    void OSMesaDestroyContext(...)
+    void OSMesaMakeCurrent(...)
 
-cdef extern int init_context(int w, int h)
-cdef extern void free_context()
+cdef class Context:
+    cdef OSMesaContext _ctx
+    cdef void *_buffer
+    cdef int _w
+    cdef int _h
 
-def init_ctx(int width, int height):
-    r = init_context(width, height)
-    if r == -1:
-        raise Exception("init_context failed")
+    def __init__(self, int w, int h):
+        self._w = w
+        self._h = h
+        self._ctx = OSMesaCreateContextExt(OSMESA_RGBA, 16, 0, 0, NULL);
+        self._buffer = malloc(w * h * 4 * sizeof(GLubyte))
+        OSMesaMakeCurrent(self._ctx, self._buffer, GL_UNSIGNED_BYTE, w, h)
 
-def free_ctx():
-    free_context()
+    def __del__(self):
+        free(self._buffer)
+        OSMesaDestroyContext(self._ctx)
+
+    def get_buffer(self):
+        return array_int_c2numpy(<int *>(self._buffer), self._w * self._h * 4)
 """
 print extra_code
 

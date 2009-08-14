@@ -2833,6 +2833,13 @@ def convert_float(ptr):
     from ctypes import c_float
     return (c_float * len(ptr))(*ptr)
 
+cdef ndarray array_int_c2numpy(int *A, int len):
+    from numpy import empty
+    cdef ndarray vec = empty([len], dtype="uint8")
+    cdef int *pvec = <int *>vec.data
+    memcpy(pvec, A, len*sizeof(char))
+    return vec
+
 cdef extern from "GL/osmesa.h":
     int OSMESA_RGBA
     int GL_UNSIGNED_BYTE
@@ -2861,13 +2868,6 @@ cdef class Context:
 
     def get_buffer(self):
         return array_int_c2numpy(<int *>(self._buffer), self._w * self._h * 4)
-
-cdef ndarray array_int_c2numpy(int *A, int len):
-    from numpy import empty
-    cdef ndarray vec = empty([len], dtype="uint8")
-    cdef int *pvec = <int *>vec.data
-    memcpy(pvec, A, len*sizeof(char))
-    return vec
 
 from numpy import array
 from numpy cimport ndarray
