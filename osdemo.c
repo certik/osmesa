@@ -18,7 +18,7 @@ void *get_buffer()
 int get_width() { return Width; }
 int get_height() { return Height; }
 
-int init_context(int w, int h)
+OSMesaContext init_context(int w, int h)
 {
     Width = w;
     Height = h;
@@ -40,7 +40,7 @@ int init_context(int w, int h)
       return -1;
    }
 
-   return 0;
+   return ctx;
 }
 
 void free_context()

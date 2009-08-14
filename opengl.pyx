@@ -2833,28 +2833,31 @@ def convert_float(ptr):
     from ctypes import c_float
     return (c_float * len(ptr))(*ptr)
 
-cdef extern int init_context(int w, int h)
-cdef extern void free_context()
-cdef extern void * get_buffer()
-cdef extern int get_width()
-cdef extern int get_height()
-
+cdef extern from "GL/osmesa.h":
+    int OSMESA_RGBA
+    ctypedef struct OSMesaContext:
+        pass
+    OSMesaContext OSMesaCreateContextExt(...)
+    void OSMesaDestroyContext(...)
 
 cdef class Context:
+    cdef OSMesaContext _ctx
     cdef void *_buffer
     cdef int _w
     cdef int _h
 
     def __init__(self, int w, int h):
-        init_context(w, h)
         self._w = w
         self._h = h
+        self._ctx = OSMesaCreateContextExt(OSMESA_RGBA, 16, 0, 0, NULL);
+        self._buffer = malloc(w * h * 4 * sizeof(GLubyte))
 
     def __del__(self):
-        free_context()
+        free(self._buffer)
+        OSMesaDestroyContext(self._ctx)
 
     def get_buffer(self):
-        return array_int_c2numpy(<int *>(get_buffer()), self._w * self._h * 4)
+        return array_int_c2numpy(<int *>(self._buffer), self._w * self._h * 4)
 
 cdef ndarray array_int_c2numpy(int *A, int len):
     from numpy import empty
