@@ -97,8 +97,6 @@ void render_image(void)
 
 
    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-   //glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-   //glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
    glEnable(GL_LIGHTING);
@@ -131,29 +129,6 @@ void render_image(void)
     glVertex3f(-1.0f,-1.0f, 0.0f);
   glEnd();
    glPopMatrix();
-/*
-   glPushMatrix();
-   glTranslatef(-0.75, 0.5, 0.0);
-   glRotatef(90.0, 1.0, 0.0, 0.0);
-   glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, red_mat );
-   Torus(0.275, 0.85, 20, 20);
-   glPopMatrix();
-
-   glPushMatrix();
-   glTranslatef(-0.75, -0.5, 0.0);
-   glRotatef(270.0, 1.0, 0.0, 0.0);
-   glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, green_mat );
-   Cone(1.0, 2.0, 16, 1);
-   glPopMatrix();
-
-   glPushMatrix();
-   glTranslatef(0.75, 0.0, -1.0);
-   glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, blue_mat );
-   Sphere(1.0, 20, 20);
-   glPopMatrix();
-   */
-
-   //glFinish();
 }
 
 void sph(double angle)
