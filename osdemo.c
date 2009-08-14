@@ -141,6 +141,10 @@ void render_image(void)
 void render_image2(void)
 {
     glVertex3f( 1.0f,-1.0f, 0.0f);
+}
+
+void render_image3(void)
+{
     glVertex3f(-1.0f,-1.0f, 0.0f);
   glEnd();
   glPopMatrix();

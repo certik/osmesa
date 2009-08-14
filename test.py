@@ -46,5 +46,6 @@ osmesa.render()
 
 #gl.glFinish();
 osmesa.render2()
+osmesa.render3()
 
 osmesa.free_ctx()
