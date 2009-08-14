@@ -2835,10 +2835,12 @@ def convert_float(ptr):
 
 cdef extern from "GL/osmesa.h":
     int OSMESA_RGBA
+    int GL_UNSIGNED_BYTE
     ctypedef struct OSMesaContext:
         pass
     OSMesaContext OSMesaCreateContextExt(...)
     void OSMesaDestroyContext(...)
+    void OSMesaMakeCurrent(...)
 
 cdef class Context:
     cdef OSMesaContext _ctx
@@ -2851,6 +2853,7 @@ cdef class Context:
         self._h = h
         self._ctx = OSMesaCreateContextExt(OSMESA_RGBA, 16, 0, 0, NULL);
         self._buffer = malloc(w * h * 4 * sizeof(GLubyte))
+        OSMesaMakeCurrent(self._ctx, self._buffer, GL_UNSIGNED_BYTE, w, h)
 
     def __del__(self):
         free(self._buffer)
