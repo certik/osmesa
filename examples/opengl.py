@@ -15,8 +15,11 @@ This example demonstrates:
 
 from math import pi, sin, cos
 
-#import pyglet
-#import pyglet.gl
+offscreen = False
+
+if not offscreen:
+    import pyglet
+    import pyglet.gl
 
 from gl import (GL_DEPTH_TEST, GL_CULL_FACE, GL_LIGHTING, GL_LIGHT0, GL_LIGHT1,
         GL_POSITION, GL_SPECULAR, GL_DIFFUSE, GL_FRONT_AND_BACK,
@@ -27,24 +30,26 @@ from gl import (GL_DEPTH_TEST, GL_CULL_FACE, GL_LIGHTING, GL_LIGHT0, GL_LIGHT1,
 from glu import gluPerspective
 import gl
 
-#try:
-#    # Try and create a window with multisampling (antialiasing)
-#    config = pyglet.gl.Config(sample_buffers=1, samples=4,
-#                    depth_size=16, double_buffer=True,)
-#    window = pyglet.window.Window(resizable=True, config=config)
-#except pyglet.window.NoSuchConfigException:
-#    # Fall back to no multisampling for old hardware
-#    window = pyglet.window.Window(resizable=True)
+if not offscreen:
+    try:
+        # Try and create a window with multisampling (antialiasing)
+        config = pyglet.gl.Config(sample_buffers=1, samples=4,
+                        depth_size=16, double_buffer=True,)
+        window = pyglet.window.Window(resizable=True, config=config)
+    except pyglet.window.NoSuchConfigException:
+        # Fall back to no multisampling for old hardware
+        window = pyglet.window.Window(resizable=True)
 
-#@window.event
-def on_resize(width, height):
-    # Override the default on_resize handler to create a 3D projection
-    gl.glViewport(0, 0, width, height)
-    gl.glMatrixMode(GL_PROJECTION)
-    gl.glLoadIdentity()
-    gluPerspective(60., width / float(height), .1, 1000.)
-    gl.glMatrixMode(GL_MODELVIEW)
-    #return pyglet.event.EVENT_HANDLED
+if not offscreen:
+    @window.event
+    def on_resize(width, height):
+        # Override the default on_resize handler to create a 3D projection
+        gl.glViewport(0, 0, width, height)
+        gl.glMatrixMode(GL_PROJECTION)
+        gl.glLoadIdentity()
+        gluPerspective(60., width / float(height), .1, 1000.)
+        gl.glMatrixMode(GL_MODELVIEW)
+        return pyglet.event.EVENT_HANDLED
 
 def update(dt):
     global rx, ry, rz
@@ -54,9 +59,10 @@ def update(dt):
     rx %= 360
     ry %= 360
     rz %= 360
-#pyglet.clock.schedule(update)
 
-#@window.event
+if not offscreen:
+    pyglet.clock.schedule(update)
+
 def on_draw():
     gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     gl.glLoadIdentity()
@@ -65,6 +71,9 @@ def on_draw():
     gl.glRotatef(ry, 0, 1, 0)
     gl.glRotatef(rx, 1, 0, 0)
     torus.draw()
+
+if not offscreen:
+    on_draw = window.event(on_draw)
 
 def setup():
     # One-time GL setup
@@ -151,23 +160,27 @@ class Torus(object):
     def draw(self):
         gl.glCallList(self.list)
 
-w = 800
-h = 400
-gl.init_ctx(w, h)
+if offscreen:
+    w = 800
+    h = 400
+    gl.init_ctx(w, h)
 setup()
 
-gl.glMatrixMode(gl.GL_PROJECTION);
-gl.glLoadIdentity();
-gl.glOrtho(-2.5, 2.5, -2.5, 2.5, -10.0, 10.0);
-gl.glMatrixMode(gl.GL_MODELVIEW);
+if offscreen:
+    gl.glMatrixMode(gl.GL_PROJECTION);
+    gl.glLoadIdentity();
+    gl.glOrtho(-2.5, 2.5, -2.5, 2.5, -10.0, 10.0);
+    gl.glMatrixMode(gl.GL_MODELVIEW);
 
 
 torus = Torus(1, 0.3, 50, 30)
 rx = ry = rz = 0
-on_draw()
+if offscreen:
+    on_draw()
 
-gl.glFlush()
-gl.glFinish()
-gl.free_ctx()
+    gl.glFlush()
+    gl.glFinish()
+    gl.free_ctx()
 
-#pyglet.app.run()
+if not offscreen:
+    pyglet.app.run()
