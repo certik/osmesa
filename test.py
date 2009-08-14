@@ -2,8 +2,8 @@ import ctypes
 import sys
 sys.setdlopenflags(sys.getdlopenflags() | ctypes.RTLD_GLOBAL)
 
-import osmesa
 import gl
+import osmesa
 
 w = 400
 h = 400
