@@ -12,8 +12,3 @@ glu:
 	cython glu.pyx
 	gcc -fPIC -I/usr/include/python2.6 -c -o glu.o glu.c
 	gcc -shared -o glu.so glu.o -lGL -lGLU
-
-demo:
-	cython osmesa.pyx
-	gcc -fPIC -I/usr/include/python2.6 -c -o osmesa.o osmesa.c
-	gcc -shared -o osmesa.so osmesa.o osdemo.o
