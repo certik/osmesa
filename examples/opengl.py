@@ -16,6 +16,7 @@ This example demonstrates:
 from math import pi, sin, cos
 
 import pyglet
+import pyglet.gl
 
 from gl import (GL_DEPTH_TEST, GL_CULL_FACE, GL_LIGHTING, GL_LIGHT0, GL_LIGHT1,
         GL_POSITION, GL_SPECULAR, GL_DIFFUSE, GL_FRONT_AND_BACK,
