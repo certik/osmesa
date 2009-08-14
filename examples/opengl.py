@@ -176,6 +176,7 @@ if offscreen:
 torus = Torus(1, 0.3, 50, 30)
 rx = ry = rz = 0
 if offscreen:
+    update(0.5)
     on_draw()
 
     gl.glFlush()
