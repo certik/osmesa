@@ -114,9 +114,6 @@ void render_image(void)
    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
    glPushMatrix();
-   //glRotatef(20.0, 1.0, 0.0, 0.0);
-
-   glPushMatrix();
    glTranslatef(-0.75, 0.5, 0.0);
    glRotatef(90.0, 1.0, 0.0, 0.0);
    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, red_mat );
@@ -136,11 +133,6 @@ void render_image(void)
    Sphere(1.0, 20, 20);
    glPopMatrix();
 
-   glPopMatrix();
-
-   /* This is very important!!!
-    * Make sure buffered commands are finished!!!
-    */
    glFinish();
 }
 
