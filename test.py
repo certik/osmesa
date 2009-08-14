@@ -1,3 +1,7 @@
+import ctypes
+import sys
+sys.setdlopenflags(sys.getdlopenflags() | ctypes.RTLD_GLOBAL)
+
 import osmesa
 import gl
 
@@ -45,8 +49,8 @@ osmesa.render()
 
 
 #gl.glFinish();
-#gl.glVertex3f(1.0, -1.0, 0.0)
-osmesa.glVertex3f(1.0, -1.0, 0.0)
+gl.glVertex3f(1.0, -1.0, 0.0)
+#osmesa.glVertex3f(1.0, -1.0, 0.0)
 #osmesa.render2()
 osmesa.render3()
 
