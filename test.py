@@ -45,6 +45,7 @@ osmesa.render()
 
 
 #gl.glFinish();
+#gl.glVertex3f(1.0, -1.0, 0.0)
 osmesa.render2()
 osmesa.render3()
 
