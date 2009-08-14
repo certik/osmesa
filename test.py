@@ -1,7 +1,7 @@
 import opengl as gl
 
 w = 400
-h = 400
+h = 200
 
 gl.init_ctx(w, h)
 gl.glLightfv(gl.GL_LIGHT0, gl.GL_AMBIENT, [0, 0, 0, 1]);
@@ -44,6 +44,14 @@ gl.glPopMatrix();
 
 gl.glFinish();
 
-print gl.py_get_buffer()
+data = gl.py_get_buffer()
+rgba = data.reshape((h, w, 4))
+# ignore the alpha channel:
+rgb = rgba[:, :, :3]
+# flip the image upside down:
+rgb = rgb[::-1]
+from scipy.misc import toimage
+image = toimage(rgb, channel_axis=2)
+image.save("b.png")
 
 gl.free_ctx()
