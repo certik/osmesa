@@ -97,8 +97,8 @@ void render_image(void)
 
 
    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-   glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-   glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+   //glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+   //glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
    glEnable(GL_LIGHTING);
@@ -115,9 +115,12 @@ void render_image(void)
 
 
    glPushMatrix();
-  glTranslatef(-1.5f,0.0f,-.2f);
+  glTranslatef(-1.5f,0.0f,-5.f);
+  glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, red_mat );
   glBegin(GL_TRIANGLES);
+    glColor3f(1.f, 0.f, .0f);
     glVertex3f( 0.0f, 1.0f, 0.0f);
+    glColor3f(.0f, 1.f, .0f);
     glVertex3f(-1.0f,-1.0f, 0.0f);
     glVertex3f( 1.0f,-1.0f, 0.0f);
   glEnd();
