@@ -1,4 +1,4 @@
-import gl
+import opengl as gl
 
 w = 400
 h = 400
