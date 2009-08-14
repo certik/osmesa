@@ -67,7 +67,7 @@ def on_draw():
 
 def setup():
     # One-time GL setup
-    gl.glClearColor(1, 1, 1, 1)
+    gl.glClearColor(1, 0, 1, 1)
     gl.glColor3f(1, 0, 0)
     gl.glEnable(GL_DEPTH_TEST)
     gl.glEnable(GL_CULL_FACE)
